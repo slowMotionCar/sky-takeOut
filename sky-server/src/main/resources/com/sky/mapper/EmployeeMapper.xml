@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.EmployeeMapper">
+    <insert id="addEmployee" parameterType="com.sky.entity.Employee">
+        insert into employee (id, username, name, password, phone, sex, id_number, status, create_time, update_time,
+                              create_user, update_user)
+        values (null, #{username}, #{name}, #{password}, #{phone}, #{sex}, #{idNumber}, #{status}, #{createTime},
+                #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <select id="displayEmployee" resultType="com.sky.entity.Employee">
+        select * from employee
+        <where>
+            <if test="name!=null and name != '' ">
+                name like concat("%",#{name},"%")
+            </if>
+        </where>
+    </select>
+
+<update id="updateEmployee" parameterType="com.sky.entity.Employee">
+    update employee
+<set>
+    <if test="name!=null and name!=''">
+        name = #{name},
+    </if>
+    <if test="username!=null and username!=''">
+        username = #{username},
+    </if>
+    <if test="password!=null and password!=''">
+        password = #{password},
+    </if>
+    <if test="phone!=null and phone!=''">
+        phone = #{phone},
+    </if>
+    <if test="sex!=null and sex!=''">
+        sex = #{sex},
+    </if>
+    <if test="idNumber!=null and idNumber!=''">
+       id_number = #{idNumber},
+    </if>
+    <if test="status!=null">
+        status = #{status},
+    </if>
+    <if test="createTime!=null">
+        create_time = #{createTime},
+    </if>
+    <if test="updateTime!=null">
+        update_time = #{updateTime},
+    </if>
+    <if test="createUser!=null">
+        create_user = #{createUser},
+    </if>
+    <if test="updateUser!=null">
+        update_user = #{updateUser},
+    </if>
+</set>
+        where id = #{id}
+
+</update>
+    <select id="getEployeeById" resultType="com.sky.entity.Employee">
+        select * from employee where id = #{id}
+    </select>
+</mapper>

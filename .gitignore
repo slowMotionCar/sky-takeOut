@@ -1,0 +1,7 @@
+**/target/
+.idea
+*.iml
+*.class
+#将以下内容注释, 测试代码要版本控制
+#*Test.java
+#**/test/

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishFlavorMapper">
+    <insert id="addDishFlavor" parameterType="com.sky.entity.DishFlavor">
+        insert into dish_flavor
+        values (null, #{dishId}, #{name}, #{value})
+    </insert>
+    <insert id="addDishFlavorAll" parameterType="com.sky.entity.DishFlavor">
+        insert into dish_flavor (id,dish_id,name,value) values
+        <foreach collection="flavors" item="flavor" separator=",">
+            (null,#{flavor.dishId},#{flavor.name},#{flavor.value})
+        </foreach>
+    </insert>
+    <delete id="deleteDishFlavor">
+        delete from dish_flavor
+        <where>
+            dish_id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+    <select id="findDishFlavorByDishId" resultType="com.sky.entity.DishFlavor">
+        select * from dish_flavor where dish_id = #{id}
+    </select>
+    <select id="countDishFlavorByDishId" resultType="Integer">
+        select count(id) from dish_flavor where dish_id = #{id}
+    </select>
+</mapper>
